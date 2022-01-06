@@ -56,7 +56,8 @@
                             
                               <b-button type="submit" variant="primary">Ingresar</b-button>
 
-                              <b-button  href="{{ route('password.request') }}" variant="link">¿Olvidaste tu contraseña?</b-button>  
+                              <b-button  href="{{ route('password.request') }}" variant="link">¿Olvidaste tu contraseña?</b-button>
+              </b-form>                 
                                 
             </b-card>    
         </b-col>
