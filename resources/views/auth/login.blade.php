@@ -8,9 +8,23 @@
 
             <b-card title="Inicion de sesion " class="my-5">
                
-              <b-alert show>
-                        Por favor ingresa tus datos:
+              
+
+              @if($errors->any())
+              <b-alert show variant="danger">
+                  @foreach($errors->all() as $error)
+                  <ul class="mb-0">
+                        <li>{{ $error }}</li>
+                  </ul>
+                  @endforeach
               </b-alert>
+               @else
+               <b-alert show>
+                        Por favor ingresa tus datos:
+              </b-alert>  
+
+              @endif
+
 
               <b-form  method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
