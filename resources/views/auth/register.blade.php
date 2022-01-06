@@ -1,77 +1,94 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+<b-container>
+    <b-row align-h="center">
+    
+        <b-col cols="8">
+
+            <b-card title="Inicion de sesion" class="my-5">
+                    
+                    @if($errors->any())
+                    <b-alert show variant="danger">
+                         @foreach($errors->all() as $error)
+                        <ul class="mb-0">
+                            <li>{{ $error }}</li>
+                        </ul>
+                        @endforeach
+                    </b-alert>
+                    @else 
+                      <b-alert show>
+                        Por favor ingresa tus datos:
+                    </b-alert>
+
+                    @endif
+
+
+            <b-form  method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+                        <b-form-group
+                            label="Nombre"
+                            label-for="name">
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                            <b-form-input
+                            type="text"
+                            id="name"
+                            name="name"   
+                            value="{{ old('name') }}" 
+                            required autofocus>
+                            </b-form-input>
+                        </b-form-group>
 
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        <b-form-group
+                            label="Correo electronico"
+                            label-for="email">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                            <b-form-input
+                            type="email"
+                            id="email"
+                            name="email"   
+                            value="{{ old('email') }}" 
+                            placeholder="example@programacionymas.com"
+                            required autofocus>
+                            </b-form-input>
+                        </b-form-group>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                        <b-form-group
+                            label="Contraseña"
+                            label-for="password">
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                            <b-form-input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value="{{ old('password') }}" 
+                            required>
+                            </b-form-input>
+                        </b-form-group>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                        <b-form-group
+                            label="Confirmar Contraseña"
+                            label-for="password-confirm">
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                            <b-form-input
+                            type="password"
+                            id="password-confirm"
+                            name="password_confirmation"
+                            required>
+                            </b-form-input>
+                        </b-form-group>
+    
+                              <b-button type="submit" variant="primary">Registrarse</b-button>
+                         
+              </b-form>                 
+              
+            </b-card>    
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+        </b-col>
+      
+    </b-row>
+</b-container>
 
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

@@ -6,7 +6,7 @@
     
         <b-col cols="8">
 
-            <b-card title="Inicion de sesion ">
+            <b-card title="Inicion de sesion " class="my-5">
                
               <b-alert show>
                         Por favor ingresa tus datos:
