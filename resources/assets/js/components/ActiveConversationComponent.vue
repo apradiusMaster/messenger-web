@@ -68,7 +68,8 @@ import MessageConversationComponent from './MessageConversationComponent.vue';
         data() {
             return {
                 messages: [],
-                newMessage: ''
+                newMessage: '',
+                contactId: 2
             };
         },    
         
@@ -79,7 +80,7 @@ import MessageConversationComponent from './MessageConversationComponent.vue';
 
         methods: {
             getMessages(){
-                 axios.get('/api/message')
+                 axios.get(`/api/message?contact_id=${this.contactId}`)
                  .then((response) => {
                               //  console.log(response.data); 
 
