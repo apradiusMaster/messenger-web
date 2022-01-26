@@ -41,3 +41,9 @@ if (token) {
     cluster: 'us2',
     encrypted: true
   });
+
+
+
+  // date & time moment
+
+  window.moment = require('moment');
