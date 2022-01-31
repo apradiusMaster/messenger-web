@@ -7,7 +7,11 @@
                             
                         </b-col>
                         <b-col cols="6" align-self="center" class="d-none d-md-block">
-                            <p class="mb-1">{{ conversation.contact_name }}</p>
+                            <p class="mb-1">
+                                <status-component :online="conversation.online" />
+
+                                {{ conversation.contact_name }}
+                            </p>
                             <p class="text-muted small mb-1">{{ conversation.last_message }}</p>
                         </b-col>
                         <b-col cols="3" class="d-none d-md-block">
