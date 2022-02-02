@@ -2,5 +2,6 @@
 
 @section('content')
 
-    <mesenger-component :user-id="{{ auth()->id() }}" />
+    <mesenger-component :user="{{ auth()->user() }}" 
+                        />
 @endsection

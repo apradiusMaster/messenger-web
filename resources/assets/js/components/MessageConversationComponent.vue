@@ -3,7 +3,7 @@
         
                         <b-media :right-align="writtenByMe" vertical-align="center" class="mb-2">
                             <template #aside>
-                            <b-img blank blank-color="#ccc" rounded="circle" width="48" alt="placeholder"></b-img>
+                            <b-img  :src="image" rounded="circle" width="48" height="48"></b-img>
                             </template>
 
                             <b-card>
@@ -19,7 +19,7 @@
     export default {
 
         props: {
-
+                image: String,
                 writtenByMe:Boolean,    
 
         },

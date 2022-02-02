@@ -5,6 +5,7 @@
                 <contact-component v-for=" conversation in conversations"
                                    :key="conversation.id"
                                    :conversation="conversation"
+                                   :selected= "selectedConversationId === conversation.id"
                                    @click.native="selectConversation(conversation)">
 
                 </contact-component>
@@ -26,7 +27,8 @@
 
         data() {
             return {
-            
+
+                selectedConversationId: null
             };
         },    
 
@@ -40,7 +42,10 @@
 
             selectConversation(conversation){
                    // console.log(conversation);
+                   this.selectedConversationId = conversation.id;
                    this.$emit('conversationSelected', conversation);
+                   
+                   eventBus.$emit('example', conversation);
             }
         }
 

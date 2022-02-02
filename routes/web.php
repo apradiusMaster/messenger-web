@@ -23,4 +23,7 @@ Route::get('/api/conversation', 'ConversationController@index');
 Route::get('/api/message','MessageController@index');
 Route::post('/api/message','MessageController@store');
 
+Route::get('/profile', 'ProfileController@edit');
+Route::post('/profile', 'ProfileController@update');
+
 

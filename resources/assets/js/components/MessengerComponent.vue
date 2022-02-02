@@ -27,6 +27,8 @@
                 v-if="selectedConversation"
                 :contact-id="selectedConversation.contact_id"
                 :contact-name="selectedConversation.contact_name"
+                :contact-image="selectedConversation.contact_image"
+                :my-image="myImageUrl"
                 :messages="messages"
                 @messageCreated="addMessage($event)">
 
@@ -41,7 +43,7 @@
 <script>
     export default {
         props: {
-            userId: Number
+            user: Object
         },
         data() {
             return {
@@ -55,7 +57,7 @@
 
         mounted() {
             this.getCoversations();
-           Echo.private(`users.${this.userId}`)
+           Echo.private(`users.${this.user.id}`)
             .listen('MessageSent', (data) => {
                 const message = data.message;
                 message.written_by_me = false;
@@ -101,7 +103,7 @@
                             conversation.contact_id == message.to_id
                 });     
 
-                const author = this.userId === message.from_id ? 'Tú' : conversation.contact_name;
+                const author = this.user.id === message.from_id ? 'Tú' : conversation.contact_name;
 
                 conversation.last_message = `${author}: ${message.content}`;
                 conversation.last_time = message.created_at;
@@ -134,6 +136,9 @@
 
         },
         computed: {
+            myImageUrl(){
+                return `/users/${this.user.image}`;
+            },
 
             conversationsFiltered(){
                 return this.conversations.filter(
