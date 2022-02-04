@@ -29,7 +29,7 @@
                 :contact-name="selectedConversation.contact_name"
                 :contact-image="selectedConversation.contact_image"
                 :my-image="myImageUrl"
-                :messages="messages"
+
                 @messageCreated="addMessage($event)">
 
              </active-conversation-component>
@@ -49,7 +49,6 @@
             return {
 
                 selectedConversation: null,
-                messages: [],
                 conversations: [],
                 querySearch: ''
             };
@@ -93,7 +92,7 @@
                  .then((response) => {
                               //  console.log(response.data); 
 
-                                    this.messages = response.data;
+                                    this.$store.commit('newMessageList', response.data);
 
                  });
             },
@@ -110,7 +109,7 @@
 
                  if(this.selectedConversation.contact_id == message.from_id
                     || this.selectedConversation.contact_id == message.to_id ){
-                    this.messages.push(message);
+                    this.$store.commit('addMessage',message);
                  }
                 
 

@@ -82,7 +82,6 @@ import MessageConversationComponent from './MessageConversationComponent.vue';
             contactName: String,
             contactImage: String,
             myImage: String,
-            messages: Array
         },
 
         data() {
@@ -92,9 +91,9 @@ import MessageConversationComponent from './MessageConversationComponent.vue';
         },    
         
         mounted() {
-            eventBus.$on('example', function(data){
+           /* eventBus.$on('example', function(data){
                 console.log('Ocurrio el evento example', data);
-            }); 
+            }); */
         },
 
         methods: {
@@ -119,6 +118,12 @@ import MessageConversationComponent from './MessageConversationComponent.vue';
             scrollToBotton(){
                 const el = document.querySelector('.card-body-scroll');
                 el.scrollTop = el.scrollHeight;
+            }
+        },
+        computed: {
+
+            messages(){
+                return this.$store.state.messages;
             }
         },
         updated(){
