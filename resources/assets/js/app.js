@@ -22,7 +22,9 @@ Vue.component('profile-form-component', require('./components/ProfileFormCompone
 
 const store = new Vuex.Store({
     state: {
-      messages: []
+      messages: [],
+      selectedConversation: null
+      
     }, 
     mutations: {
         newMessageList(state, messages){
@@ -30,11 +32,21 @@ const store = new Vuex.Store({
         },
         addMessage(state, message){
             state.messages.push(message);
+        },
+        selectConversation(state, conversation){
+            state.selectedConversation = conversation;
         }
+    },
+    actions: {
+        getMessages(context, conversation ){
+            axios.get(`/api/message?contact_id=${conversation.contact_id}`)
+            .then(response => {
+                               context.commit('newMessageList',  response.data);
+                               context.commit('selectConversation', conversation);
+                             });
+       }
     }
-  })
-
-
+  });
 
 const app = new Vue({
     el: '#app',

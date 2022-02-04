@@ -15,7 +15,7 @@
 
             </b-form>   
                 
-            <contact-list-component @conversationSelected="changeActiveConversation($event)"
+            <contact-list-component 
                                     :conversations="conversationsFiltered">
 
             </contact-list-component>
@@ -47,8 +47,6 @@
         },
         data() {
             return {
-
-                selectedConversation: null,
                 conversations: [],
                 querySearch: ''
             };
@@ -82,20 +80,6 @@
 
         methods: {
 
-            changeActiveConversation(conversation) {
-                //console.log('Nueva conv seleccionada', conversation);
-                this.selectedConversation = conversation;
-                this.getMessages();
-            },
-                      getMessages(){
-                 axios.get(`/api/message?contact_id=${this.selectedConversation.contact_id}`)
-                 .then((response) => {
-                              //  console.log(response.data); 
-
-                                    this.$store.commit('newMessageList', response.data);
-
-                 });
-            },
             addMessage(message){
                 const conversation = this.conversations.find((conversation) =>{
                     return conversation.contact_id == message.from_id ||
@@ -135,6 +119,10 @@
 
         },
         computed: {
+
+            selectedConversation(){
+                return this.$store.state.selectedConversation;
+            },
             myImageUrl(){
                 return `/users/${this.user.image}`;
             },
