@@ -19,12 +19,14 @@ Vue.component('active-conversation-component',require('./components/ActiveConver
 Vue.component('message-conversation-component', require('./components/MessageConversationComponent.vue'));
 Vue.component('status-component', require('./components/StatusComponent'));
 Vue.component('profile-form-component', require('./components/ProfileFormComponent'));
+Vue.component('contact-form-component', require('./components/ContactFormComponent'));
 
 const store = new Vuex.Store({
     state: {
       messages: [],
-      selectedConversation: null
-      
+      selectedConversation: null,
+      conversations: [],
+      querySearch: ''
     }, 
     mutations: {
         newMessageList(state, messages){
@@ -35,6 +37,12 @@ const store = new Vuex.Store({
         },
         selectConversation(state, conversation){
             state.selectedConversation = conversation;
+        },
+        newQuerySearch(state, newValue){
+            state.querySearch = newValue;
+        },
+        newConversationList(state, conversations){
+            state.conversations = conversations;
         }
     },
     actions: {
@@ -44,7 +52,25 @@ const store = new Vuex.Store({
                                context.commit('newMessageList',  response.data);
                                context.commit('selectConversation', conversation);
                              });
-       }
+       },
+       getConversations(context){
+
+        axios.get('/api/conversation')
+           .then( (response) => {
+                context.commit('newConversationList', response.data);
+           });
+
+           },
+       },
+    getters: {
+        conversationsFiltered(state){
+            return  state.conversations.filter(
+                (conversation) => 
+                conversation.contact_name
+                .toLowerCase()
+                .includes(state.querySearch.toLowerCase())
+            );
+        }
     }
   });
 

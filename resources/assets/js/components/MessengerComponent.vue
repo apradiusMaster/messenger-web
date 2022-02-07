@@ -4,21 +4,9 @@
     <b-row class="h-100" no-gutters>
         <b-col cols="4">
 
-                
-            <b-form class=" my-3 mx-2">
-                    <b-form-input class="text-center"
-                        type="text"
-                        v-model="querySearch"
-                        placeholder="Buscar contacto...">
-
-                    </b-form-input>
-
-            </b-form>   
-                
-            <contact-list-component 
-                                    :conversations="conversationsFiltered">
-
-            </contact-list-component>
+            <contact-form-component />    
+      
+            <contact-list-component />
                  
         </b-col>
 
@@ -41,19 +29,23 @@
 </template>
 
 <script>
+import ContactFormComponent from './ContactFormComponent.vue';
     export default {
+  components: { ContactFormComponent },
         props: {
             user: Object
         },
         data() {
             return {
-                conversations: [],
+                
                 querySearch: ''
             };
         },    
 
         mounted() {
-            this.getCoversations();
+            
+            this.$store.dispatch('getConversations');
+
            Echo.private(`users.${this.user.id}`)
             .listen('MessageSent', (data) => {
                 const message = data.message;
@@ -98,22 +90,12 @@
                 
 
             },
-
-             getCoversations(){
-
-                axios.get('/api/conversation')
-                   .then( (response) => {
-                        //console.log(response);
-                        this.conversations = response.data;
-                   });
-
-            },
             changeStatus(user, status){
-                 const index = this.conversations.findIndex((conversation) => {
+                 const index = this.$store.state.conversations.findIndex((conversation) => {
                     return conversation.contact_id == user.id;
                 });
                 if (index >= 0)
-                this.$set( this.conversations[index], 'online', status);
+                this.$set( this.$store.state.conversations[index], 'online', status);
 
             }
 
@@ -125,15 +107,6 @@
             },
             myImageUrl(){
                 return `/users/${this.user.image}`;
-            },
-
-            conversationsFiltered(){
-                return this.conversations.filter(
-                    (conversation) => 
-                    conversation.contact_name
-                    .toLowerCase()
-                    .includes(this.querySearch.toLowerCase())
-                );
             }
         }
 

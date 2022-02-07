@@ -2,7 +2,7 @@
 
         <b-list-group>
 
-                <contact-component v-for=" conversation in conversations"
+                <contact-component v-for=" conversation in conversationsFiltered"
                                    :key="conversation.id"
                                    :conversation="conversation"
                                    :selected="isSelected(conversation)"
@@ -42,6 +42,9 @@
         computed: {
             selectedConversation(){
                    return  this.$store.state.selectedConversation;
+            },
+            conversationsFiltered(){
+                    return this.$store.getters.conversationsFiltered;
             }
          
         }
