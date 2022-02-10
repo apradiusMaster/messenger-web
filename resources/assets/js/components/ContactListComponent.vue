@@ -26,10 +26,10 @@
         },
 
         methods: {
-            selectConversation(conversation){
-                   
-                  this.$store.dispatch('getMessages', conversation);
-                   
+            selectConversation(conversation){ 
+                    this.$router.push(`/chat/${conversation.id}`, () => {
+                               this.$store.dispatch('getMessages', conversation);
+                    });                 
                  //  eventBus.$emit('example', conversation);
             },
                isSelected(conversation){
